@@ -1,0 +1,1 @@
+ALTER TABLE "users" ALTER COLUMN "user-image" SET DEFAULT '/defaultUser.svg';
