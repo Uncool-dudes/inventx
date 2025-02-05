@@ -1,8 +1,6 @@
 "use server";
 import { insertEvent } from "@/db/types";
-import db from "@/db";
 import { BasicEventType } from "../lib/basicEventType";
-import { eventsTable } from "@/db/schema";
 import { InsertEvent } from "../db/insertEvent";
 import { InsertAttendees } from "../db/insertAttendees";
 

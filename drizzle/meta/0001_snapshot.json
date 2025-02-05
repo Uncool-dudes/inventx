@@ -1,6 +1,6 @@
 {
-  "id": "0817c30f-a84b-4947-ad75-58747b0be455",
-  "prevId": "fa21894b-4f37-4299-bbd6-747951741967",
+  "id": "f5b696a7-e081-42ad-b012-46ec468283c2",
+  "prevId": "6b55ed13-b868-4de3-afbd-a4dffc155249",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -8,29 +8,44 @@
       "name": "users",
       "schema": "",
       "columns": {
-        "user-id": {
-          "name": "user-id",
+        "user_id": {
+          "name": "user_id",
           "type": "text",
           "primaryKey": true,
           "notNull": true
         },
-        "first-name": {
-          "name": "first-name",
+        "first_name": {
+          "name": "first_name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "last-name": {
-          "name": "last-name",
+        "last_name": {
+          "name": "last_name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "user-image": {
-          "name": "user-image",
+        "user_image": {
+          "name": "user_image",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "'/defaultUser.svg'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {},
@@ -45,50 +60,72 @@
       "name": "event_attendees",
       "schema": "",
       "columns": {
-        "attendee-id": {
-          "name": "attendee-id",
+        "attendee_id": {
+          "name": "attendee_id",
           "type": "uuid",
           "primaryKey": true,
           "notNull": true,
           "default": "uuid_generate_v4()"
         },
-        "event-id": {
-          "name": "event-id",
+        "event_id": {
+          "name": "event_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "user-id": {
-          "name": "user-id",
+        "user_id": {
+          "name": "user_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         }
       },
-      "indexes": {},
+      "indexes": {
+        "unique_user_event_idx": {
+          "name": "unique_user_event_idx",
+          "columns": [
+            {
+              "expression": "event_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "user_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
       "foreignKeys": {
-        "event_attendees_event-id_events_event-id_fk": {
-          "name": "event_attendees_event-id_events_event-id_fk",
+        "event_attendees_event_id_events_event_id_fk": {
+          "name": "event_attendees_event_id_events_event_id_fk",
           "tableFrom": "event_attendees",
           "tableTo": "events",
           "columnsFrom": [
-            "event-id"
+            "event_id"
           ],
           "columnsTo": [
-            "event-id"
+            "event_id"
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "event_attendees_user-id_users_user-id_fk": {
-          "name": "event_attendees_user-id_users_user-id_fk",
+        "event_attendees_user_id_users_user_id_fk": {
+          "name": "event_attendees_user_id_users_user_id_fk",
           "tableFrom": "event_attendees",
           "tableTo": "users",
           "columnsFrom": [
-            "user-id"
+            "user_id"
           ],
           "columnsTo": [
-            "user-id"
+            "user_id"
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
@@ -104,48 +141,48 @@
       "name": "events",
       "schema": "",
       "columns": {
-        "event-id": {
-          "name": "event-id",
+        "event_id": {
+          "name": "event_id",
           "type": "uuid",
           "primaryKey": true,
           "notNull": true,
           "default": "uuid_generate_v4()"
         },
-        "event-name": {
-          "name": "event-name",
+        "event_name": {
+          "name": "event_name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "event-description": {
-          "name": "event-description",
+        "event_description": {
+          "name": "event_description",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "event-start-date": {
-          "name": "event-start-date",
+        "event_start_date": {
+          "name": "event_start_date",
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
         },
-        "event-end-date": {
-          "name": "event-end-date",
+        "event_end_date": {
+          "name": "event_end_date",
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
         },
-        "event-location": {
-          "name": "event-location",
+        "event_location": {
+          "name": "event_location",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
           "default": "'RV University, Bangalore, India'"
         },
-        "event-organizer": {
-          "name": "event-organizer",
+        "event_organizer": {
+          "name": "event_organizer",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -158,19 +195,196 @@
           "notNull": true,
           "default": "'{}'::text[]"
         },
-        "event-ongoing": {
-          "name": "event-ongoing",
+        "event_ongoing": {
+          "name": "event_ongoing",
           "type": "boolean",
           "primaryKey": false,
           "notNull": true,
           "default": false
         },
-        "event-cancelled": {
-          "name": "event-cancelled",
+        "event_cancelled": {
+          "name": "event_cancelled",
           "type": "boolean",
           "primaryKey": false,
           "notNull": true,
           "default": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.project_members": {
+      "name": "project_members",
+      "schema": "",
+      "columns": {
+        "project_id": {
+          "name": "project_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "project_members_project_id_projects_project_id_fk": {
+          "name": "project_members_project_id_projects_project_id_fk",
+          "tableFrom": "project_members",
+          "tableTo": "projects",
+          "columnsFrom": [
+            "project_id"
+          ],
+          "columnsTo": [
+            "project_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "project_members_user_id_users_user_id_fk": {
+          "name": "project_members_user_id_users_user_id_fk",
+          "tableFrom": "project_members",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "user_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "project_members_project_id_user_id_pk": {
+          "name": "project_members_project_id_user_id_pk",
+          "columns": [
+            "project_id",
+            "user_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.projects": {
+      "name": "projects",
+      "schema": "",
+      "columns": {
+        "project_id": {
+          "name": "project_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "uuid_generate_v4()"
+        },
+        "project_name": {
+          "name": "project_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "project_tagline": {
+          "name": "project_tagline",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "project_stage": {
+          "name": "project_stage",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "project_size": {
+          "name": "project_size",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "project_pitch": {
+          "name": "project_pitch",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "project_non_profit_status": {
+          "name": "project_non_profit_status",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "project_start_date": {
+          "name": "project_start_date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "project_description": {
+          "name": "project_description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "project_industries": {
+          "name": "project_industries",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "project_location": {
+          "name": "project_location",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'RV University, Bangalore, India'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {},

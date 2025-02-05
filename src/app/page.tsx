@@ -1,9 +1,26 @@
-import { getEvent } from '@/features/events/db/getEvent';
-import Image from "next/image";
-
+import { SignedIn, SignedOut, SignInButton, SignUpButton, } from "@clerk/nextjs";
 export default async function Home() {
-  const getEventResult = await getEvent("c4702d48-980a-4384-aa98-a09d032697e9");
   return (
-    <div>hi</div>
+    <div>
+      <h1>Home</h1>
+      <SignedIn>
+        <div>
+          <h2>Welcome back!</h2>
+          <p>You are signed in.</p>
+        </div>
+      </SignedIn>
+      <SignedOut>
+        <div>
+          <h2>Welcome!</h2>
+          <p>You are not signed in.</p>
+        </div>
+        <SignInButton>
+            Sign in
+        </SignInButton>
+        <SignUpButton>
+            Sign up
+        </SignUpButton>
+      </SignedOut>
+      </div>
      );
 }

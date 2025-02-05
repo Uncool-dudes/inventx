@@ -1,3 +1,4 @@
+"use server";
 import db from '@/db';
 import { eventAttendeesTable } from '@/db/schema';
 import { insertAttendees } from '@/db/types';

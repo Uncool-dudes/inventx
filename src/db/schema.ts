@@ -1,55 +1,58 @@
 import { sql } from "drizzle-orm";
 import {
-  pgTable,
-  text,
-  boolean,
-  integer,
-  uuid,
-  timestamp,
-  uniqueIndex,
+    pgTable,
+    text,
+    boolean, uuid,
+    timestamp,
+    uniqueIndex,
+    primaryKey
 } from "drizzle-orm/pg-core";
 
 export const Users = pgTable("users", {
-  id: text("user-id").primaryKey(),
-  firstName: text("first-name").notNull(),
-  lastName: text("last-name").notNull(),
-  image: text("user-image").notNull().default("/defaultUser.svg"),
+  id: text("user_id").primaryKey(),
+  firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull(),
+  image: text("user_image").notNull().default("/defaultUser.svg"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export const eventsTable = pgTable("events", {
-  id: uuid("event-id")
+  id: uuid("event_id")
     .default(sql`uuid_generate_v4()`)
     .primaryKey(),
-  name: text("event-name").notNull(),
-  description: text("event-description").notNull(),
-  startDate: timestamp("event-start-date", { mode: "date", withTimezone: true })
+  name: text("event_name").notNull(),
+  description: text("event_description").notNull(),
+  startDate: timestamp("event_start_date", { mode: "date", withTimezone: true })
     .notNull()
     .defaultNow(),
-  endDate: timestamp("event-end-date", { mode: "date", withTimezone: true })
+  endDate: timestamp("event_end_date", { mode: "date", withTimezone: true })
     .notNull()
     .defaultNow(),
-  location: text("event-location")
+  location: text("event_location")
     .notNull()
     .default("RV University, Bangalore, India"),
-  organizer: text("event-organizer").notNull().default("RV University"),
+  organizer: text("event_organizer").notNull().default("RV University"),
   tags: text("tags")
     .array()
     .notNull()
     .default(sql`'{}'::text[]`),
-  ongoing: boolean("event-ongoing").notNull().default(false),
-  cancelled: boolean("event-cancelled").notNull().default(false),
+  ongoing: boolean("event_ongoing").notNull().default(false),
+  cancelled: boolean("event_cancelled").notNull().default(false),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export const eventAttendeesTable = pgTable(
   "event_attendees",
   {
-    attendeeeID: uuid("attendee-id")
+    attendeeeID: uuid("attendee_id")
       .default(sql`uuid_generate_v4()`)
       .primaryKey(),
-    eventID: uuid("event-id")
+    eventID: uuid("event_id")
       .notNull()
       .references(() => eventsTable.id),
-    userID: text("user-id")
+    userID: text("user_id")
       .notNull()
       .references(() => Users.id),
   },
@@ -59,4 +62,38 @@ export const eventAttendeesTable = pgTable(
       table.userID
     ),
   })
+);
+
+export const projectsTable = pgTable("projects", {
+  id: uuid("project_id").default(sql`uuid_generate_v4()`).primaryKey(),
+  name: text("project_name").notNull(),
+  tagline: text("project_tagline"),
+  stage: text("project_stage").notNull(),
+  size: text("project_size").notNull(),
+  pitch: text("project_pitch").notNull(),
+  nonProfitStatus: boolean("project_non_profit_status").default(false),
+  startDate: timestamp("project_start_date"),
+  description: text("project_description"),
+  industries: text("project_industries").array().notNull(),
+  location: text("project_location").default("RV University, Bangalore, India"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const projectMembersTable = pgTable(
+  "project_members",
+  {
+    projectId: uuid("project_id")
+      .notNull()
+      .references(() => projectsTable.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => Users.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (table) => {
+    return {
+      pk: primaryKey({ columns: [table.projectId, table.userId] }),
+    };
+  }
 );

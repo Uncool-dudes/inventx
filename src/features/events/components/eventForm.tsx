@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import { toast } from "sonner";
-import { X as RemoveIcon } from 'lucide-react';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -25,7 +24,7 @@ import {
 } from "@/components/ui/multi-select";
 import { selectUsers } from '@/db/types';
 import { handleEventCreate } from '../utils/handleEventCreate';
-import { randomUUID } from 'crypto';
+import { Textarea } from '@/components/ui/textarea';
 
 const formSchema = z
     .object( {
@@ -53,7 +52,7 @@ export function EventForm ( { users , tags }: { users: selectUsers[]; tags: stri
             startDate: new Date(),
             endDate: new Date(),
             eventDescription: "",
-            eventTags: []
+            eventTags: [],
         },
     } );
 
@@ -67,11 +66,7 @@ export function EventForm ( { users , tags }: { users: selectUsers[]; tags: stri
                 }))
             };
             handleEventCreate( transformedValues );
-            toast(
-                <pre className="mt-2 w-fit rounded-md bg-slate-950 p-4">
-                    <code className="text-white">{JSON.stringify( values, null, 2 )}</code>
-                </pre>
-            );
+            toast.success( "Form submitted successfully" );
         } catch ( error ) {
             console.error( "Form submission error", error );
             toast.error( "Failed to submit the form. Please try again." );
@@ -110,7 +105,7 @@ export function EventForm ( { users , tags }: { users: selectUsers[]; tags: stri
                                     <DatetimePicker
                                         {...field}
                                         format={[
-                                            ["months", "days", "years"],
+                                            ["days", "months", "years"],
                                             ["hours", "minutes", "am/pm"],
                                         ]}
                                     />
@@ -130,7 +125,7 @@ export function EventForm ( { users , tags }: { users: selectUsers[]; tags: stri
                                     <DatetimePicker
                                         {...field}
                                         format={[
-                                            ["months", "days", "years"],
+                                            ["days", "months", "years"],
                                             ["hours", "minutes", "am/pm"],
                                         ]}
                                     />
@@ -274,9 +269,8 @@ export function EventForm ( { users , tags }: { users: selectUsers[]; tags: stri
                         <FormItem>
                             <FormLabel>Description</FormLabel>
                             <FormControl>
-                                <Input
+                                <Textarea
                                     placeholder="..."
-                                    type="text"
                                     {...field}
                                 />
                             </FormControl>

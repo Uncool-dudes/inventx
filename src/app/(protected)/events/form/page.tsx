@@ -7,6 +7,8 @@ export default async function EventPage() {
         <div className={`flex flex-col items-center justify-center h-screen `}>
             <div className="w-1/8">
                 <EventForm users={users} tags={['hi','hello']} />
+                {/* { JSON.stringify(users) } */}
+                {/* hi */}
             </div>
         </div>
     )
