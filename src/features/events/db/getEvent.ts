@@ -64,5 +64,17 @@ export async function getEvent(eventID: string) {
       })),
   };
 
-  return eventDetails as BasicEventType;
+  return {
+    id: eventDetails.id,
+    eventName: eventDetails.name,
+    eventDescription: eventDetails.description,
+    startDate: eventDetails.startDate,
+    endDate: eventDetails.endDate,
+    location: eventDetails.location,
+    organizer: eventDetails.organizer,
+    ongoing: eventDetails.ongoing,
+    cancelled: eventDetails.cancelled,
+    eventTags: eventDetails.tags,
+    eventAttendees: eventDetails.attendees,
+  } as BasicEventType;
 }

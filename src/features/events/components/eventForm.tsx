@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/multi-select";
 import { selectUsers } from '@/db/types';
 import { handleEventCreate } from '../utils/handleEventCreate';
+import { randomUUID } from 'crypto';
 
 const formSchema = z
     .object( {
@@ -51,12 +52,21 @@ export function EventForm ( { users , tags }: { users: selectUsers[]; tags: stri
             eventAttendees: [],
             startDate: new Date(),
             endDate: new Date(),
-            eventDescription: ""
+            eventDescription: "",
+            eventTags: []
         },
     } );
 
     function onSubmit ( values: z.infer<typeof formSchema> ) {
         try {
+            const transformedValues = {
+                ...values,
+                eventAttendees: values.eventAttendees.map(userId => ({
+                    userId,
+                    ...users.find(u => u.id === userId)
+                }))
+            };
+            handleEventCreate( transformedValues );
             toast(
                 <pre className="mt-2 w-fit rounded-md bg-slate-950 p-4">
                     <code className="text-white">{JSON.stringify( values, null, 2 )}</code>
@@ -195,6 +205,58 @@ export function EventForm ( { users , tags }: { users: selectUsers[]; tags: stri
                                 <FormLabel>Attendees</FormLabel>
                                 <FormControl>
                                     <AttendeeSelector
+                                        values={field.value}
+                                        onValuesChange={field.onChange}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        );
+                    }}
+                />
+                <FormField
+                    control={form.control}
+                    name={"eventTags"}
+                    render={( { field } ) => {
+                        // Create a wrapper component that handles the tag selection
+                        const TagSelectorWrapper = ( props: {
+                            values: string[];
+                            onValuesChange: ( values: string[] ) => void;
+                        } ) => {
+                            return (
+                                <MultiSelector
+                                    values={props.values}
+                                    onValuesChange={props.onValuesChange}
+                                    loop
+                                    className="max-w-xs"
+                                >
+                                    <MultiSelectorTrigger>
+                                        <MultiSelectorInput
+                                            placeholder={props.values.length === 0 ? "Select Tags" : ""}
+                                        />
+                                    </MultiSelectorTrigger>
+                                    <MultiSelectorContent>
+                                        <MultiSelectorList>
+                                            {tags.map( ( tag ) => (
+                                                <MultiSelectorItem
+                                                    key={tag}
+                                                    value={tag}
+                                                    className="flex items-center gap-2"
+                                                >
+                                                    {tag}
+                                                </MultiSelectorItem>
+                                            ) )}
+                                        </MultiSelectorList>
+                                    </MultiSelectorContent>
+                                </MultiSelector>
+                            );
+                        };
+
+                        return (
+                            <FormItem>
+                                <FormLabel>Tags</FormLabel>
+                                <FormControl>
+                                    <TagSelectorWrapper
                                         values={field.value}
                                         onValuesChange={field.onChange}
                                     />
