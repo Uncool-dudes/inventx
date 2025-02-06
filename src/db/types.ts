@@ -1,6 +1,7 @@
 
 import { eventsTable, eventAttendeesTable, Users, projectsTable, projectMembersTable } from '@/db/schema'
 export type insertEvent = typeof eventsTable.$inferInsert
+export type selectEvent = typeof eventsTable.$inferSelect
 export type insertAttendees = typeof eventAttendeesTable.$inferInsert
 export type selectUsers = typeof Users.$inferSelect
 export type insertUser = typeof Users.$inferInsert

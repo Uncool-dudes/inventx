@@ -3,7 +3,7 @@ import { selectUsers } from '@/features/users/db/selectUsers';
 
 export default async function ProjectCreationForm(){
     const users = await selectUsers();
-    
+
     const formOptions = {
         users: users,
         industries: [
@@ -25,7 +25,7 @@ export default async function ProjectCreationForm(){
 
     return(
         <div className={`flex flex-col items-center justify-center`}>
-            <div className="w-1/3">
+            <div className="max-w-xl">
                 <ProjectForm options={formOptions} />;
             </div>
         </div>

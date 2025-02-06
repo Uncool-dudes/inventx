@@ -7,7 +7,7 @@ export async function InsertAttendees(attendee: insertAttendees[]) {
     if (attendee.length === 0) {
         return;
     }
-    var attendees = [];
+    const attendees = [];
     for (const a of attendee) {
         attendees.push(
             await db.insert(eventAttendeesTable).values(a).returning({ id: eventAttendeesTable.attendeeeID }).onConflictDoNothing()

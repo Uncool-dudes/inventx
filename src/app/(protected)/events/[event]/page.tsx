@@ -1,6 +1,6 @@
 import { getEvent } from '@/features/events/db/getEvent';
 import Image from 'next/image';
-export default async function Page ( { params, }: { params: { event: string; }; } ) {
+export default async function Page ( { params, }: { params: Promise<{ event: string; }>; } ) {
     const event = ( await params ).event;
     const Event = await getEvent(event);
     if (!Event) {

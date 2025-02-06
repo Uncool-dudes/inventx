@@ -34,7 +34,6 @@ import {
     MultiSelectorTrigger,
 } from "@/components/ui/multi-select";
 import { InsertProject } from '../db/insertProject';
-import { insertMembers } from '../db/insertProjectMembers';
 
 // Define types for the form options
 interface ProjectFormOptions {

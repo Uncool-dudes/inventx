@@ -1,6 +1,6 @@
 import { eventAttendeesTable, Users } from "./../../../db/schema";
 import { eventsTable } from "@/db/schema";
-import { eq, SQL } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import db from '@/db';
 import { BasicEventType } from "../lib/basicEventType";
 
