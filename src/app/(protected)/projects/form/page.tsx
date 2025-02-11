@@ -25,7 +25,7 @@ export default async function ProjectCreationForm(){
 
     return(
         <div className={`flex flex-col items-center justify-center`}>
-            <div className="max-w-xl">
+            <div className="w-full p-5">
                 <ProjectForm options={formOptions} />;
             </div>
         </div>

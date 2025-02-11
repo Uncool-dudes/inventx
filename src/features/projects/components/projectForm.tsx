@@ -86,7 +86,7 @@ const formSchema = z.object( {
         .string()
         .max( 100, "Location cannot exceed 100 characters" )
         .optional(),
-    projectMembers: z.array(z.string()).default([]),
+    projectMembers: z.array(z.string()).min(1, "Select at least one team member"),
 } );
 
 export type ProjectFormValues = z.infer<typeof formSchema>;

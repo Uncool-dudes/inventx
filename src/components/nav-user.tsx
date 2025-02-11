@@ -29,7 +29,7 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from "@/components/ui/sidebar";
-import { useUser } from '@clerk/nextjs';
+import { SignOutButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
 
 export function NavUser (
@@ -57,8 +57,7 @@ export function NavUser (
         <SidebarMenu>
             <SidebarMenuItem>
                 <DropdownMenu>
-                    {/* <DropdownMenuTrigger asChild> */}
-                    <Link href="/user-profile">
+                    <DropdownMenuTrigger asChild>
                         <SidebarMenuButton
                             size="lg"
                             className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
@@ -72,11 +71,9 @@ export function NavUser (
                                 <span className="truncate font-semibold">{User.name}</span>
                                 <span className="truncate text-xs">{User.email}</span>
                             </div>
-                            {/* <ChevronsUpDown className="ml-auto size-4" /> */}
-                            {/* </div> */}
+                            <ChevronsUpDown className="ml-auto size-4" />
                         </SidebarMenuButton>
-                    </Link>
-                    {/* </DropdownMenuTrigger> */}
+                    </DropdownMenuTrigger>
                     <DropdownMenuContent
                         className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
                         side={isMobile ? "bottom" : "right"}
@@ -104,27 +101,23 @@ export function NavUser (
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            <DropdownMenuItem>
-                                <BadgeCheck />
-                                Account
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <CreditCard />
-                                Billing
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <Bell />
-                                Notifications
-                            </DropdownMenuItem>
+                            <Link href="/user-profile">
+                                <DropdownMenuItem>
+                                    <BadgeCheck />
+                                    Account
+                                </DropdownMenuItem>
+                            </Link>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <LogOut />
-                            Log out
-                        </DropdownMenuItem>
+                        <SignOutButton>
+                            <DropdownMenuItem>
+                                <LogOut />
+                                Sign Out
+                            </DropdownMenuItem>
+                        </SignOutButton>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </SidebarMenuItem>
-        </SidebarMenu>
+        </SidebarMenu >
     );
 }

@@ -67,17 +67,17 @@ export const eventAttendeesTable = pgTable(
 export const projectsTable = pgTable("projects", {
   id: uuid("project_id").default(sql`uuid_generate_v4()`).primaryKey(),
   name: text("project_name").notNull(),
-  tagline: text("project_tagline"),
   stage: text("project_stage").notNull(),
   size: text("project_size").notNull(),
   pitch: text("project_pitch").notNull(),
-  nonProfitStatus: boolean("project_non_profit_status").default(false),
-  startDate: timestamp("project_start_date"),
-  description: text("project_description"),
   industries: text("project_industries").array().notNull(),
-  location: text("project_location").default("RV University, Bangalore, India"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  tagline: text("project_tagline"),
+  nonProfitStatus: boolean("project_non_profit_status").default(false),
+  location: text("project_location").default("RV University, Bangalore, India"),
+  startDate: timestamp("project_start_date"),
+  description: text("project_description"),
 });
 
 export const projectMembersTable = pgTable(

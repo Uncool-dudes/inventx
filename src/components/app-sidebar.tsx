@@ -19,17 +19,11 @@ import {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   navMain: [
     {
       title: "Events",
       url: "#",
       icon: Calendar,
-      isActive: true,
       items: [
         {
           title: "All events",

@@ -1,3 +1,4 @@
+'use client';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -5,9 +6,11 @@ import { CalendarDays, MapPin, Users } from 'lucide-react';
 import { BasicEventType } from '../lib/basicEventType';
 import { formatDate } from '@/utils/format-date';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-
-
+import { useReportWebVitals } from 'next/web-vitals';
 export function EventCard ( { event }: { event: BasicEventType; } ) {
+    useReportWebVitals( ( metric ) => {
+        console.log( metric );
+    } )
     return (
         <Card className="flex flex-col h-full">
             <CardHeader>
