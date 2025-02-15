@@ -1,6 +1,7 @@
 import { EventForm } from '@/features/events/components/eventForm';
 import { selectUsers } from '@/features/users/db/selectUsers';
 
+export const dynamic = 'force-dynamic';
 export default async function EventPage() {
     const users = await selectUsers();
     return (

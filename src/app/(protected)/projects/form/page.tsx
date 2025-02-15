@@ -1,6 +1,7 @@
 import { ProjectForm } from '@/features/projects/components/projectForm';
 import { selectUsers } from '@/features/users/db/selectUsers';
 
+export const dynamic = 'force-dynamic';
 export default async function ProjectCreationForm(){
     const users = await selectUsers();
 
