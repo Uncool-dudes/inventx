@@ -65,7 +65,7 @@ export async function getEvent(eventID: string) {
   };
 
   return {
-    id: eventDetails.id,
+    eventId: eventDetails.id,
     eventName: eventDetails.name,
     eventDescription: eventDetails.description,
     startDate: eventDetails.startDate,

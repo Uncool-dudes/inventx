@@ -1,4 +1,4 @@
-export type BasicEventType = {
+export interface BasicEventType {
     eventId?: string;
     eventName: string;
     eventDescription: string;

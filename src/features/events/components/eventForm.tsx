@@ -33,6 +33,7 @@ const formSchema = z
         endDate: z.coerce.date(),
         eventAttendees: z.array( z.string() ),
         eventDescription: z.string(),
+        eventLocation: z.string().optional(),
         eventTags: z.array( z.string() ),
     } )
     .refine(
@@ -52,6 +53,7 @@ export function EventForm ( { users , tags }: { users: selectUsers[]; tags: stri
             startDate: new Date(),
             endDate: new Date(),
             eventDescription: "",
+            eventLocation: "",
             eventTags: [],
         },
     } );
@@ -278,6 +280,25 @@ export function EventForm ( { users , tags }: { users: selectUsers[]; tags: stri
                         </FormItem>
                     )}
                 />
+                <div>
+                    <FormField
+                        control={form.control}
+                        name="eventLocation"
+                        render={( { field } ) => (
+                            <FormItem>
+                                <FormLabel>Location</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        placeholder="Event location"
+                                        type="text"
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
                 <Button type="submit">Submit</Button>
             </form>
         </Form>
