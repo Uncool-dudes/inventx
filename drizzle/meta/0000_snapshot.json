@@ -1,5 +1,5 @@
 {
-  "id": "6b55ed13-b868-4de3-afbd-a4dffc155249",
+  "id": "79c2c000-fd3e-40d2-9875-99886b931883",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -65,7 +65,7 @@
           "type": "uuid",
           "primaryKey": true,
           "notNull": true,
-          "default": "uuid_generate_v4()"
+          "default": "gen_random_uuid()"
         },
         "event_id": {
           "name": "event_id",
@@ -146,7 +146,7 @@
           "type": "uuid",
           "primaryKey": true,
           "notNull": true,
-          "default": "uuid_generate_v4()"
+          "default": "gen_random_uuid()"
         },
         "event_name": {
           "name": "event_name",
@@ -232,8 +232,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.project_attendees": {
-      "name": "project_attendees",
+    "public.project_members": {
+      "name": "project_members",
       "schema": "",
       "columns": {
         "project_id": {
@@ -258,9 +258,9 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "project_attendees_project_id_projects_project_id_fk": {
-          "name": "project_attendees_project_id_projects_project_id_fk",
-          "tableFrom": "project_attendees",
+        "project_members_project_id_projects_project_id_fk": {
+          "name": "project_members_project_id_projects_project_id_fk",
+          "tableFrom": "project_members",
           "tableTo": "projects",
           "columnsFrom": [
             "project_id"
@@ -271,9 +271,9 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "project_attendees_user_id_users_user_id_fk": {
-          "name": "project_attendees_user_id_users_user_id_fk",
-          "tableFrom": "project_attendees",
+        "project_members_user_id_users_user_id_fk": {
+          "name": "project_members_user_id_users_user_id_fk",
+          "tableFrom": "project_members",
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
@@ -286,8 +286,8 @@
         }
       },
       "compositePrimaryKeys": {
-        "project_attendees_project_id_user_id_pk": {
-          "name": "project_attendees_project_id_user_id_pk",
+        "project_members_project_id_user_id_pk": {
+          "name": "project_members_project_id_user_id_pk",
           "columns": [
             "project_id",
             "user_id"
@@ -308,19 +308,13 @@
           "type": "uuid",
           "primaryKey": true,
           "notNull": true,
-          "default": "uuid_generate_v4()"
+          "default": "gen_random_uuid()"
         },
         "project_name": {
           "name": "project_name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
-        },
-        "project_tagline": {
-          "name": "project_tagline",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
         },
         "project_stage": {
           "name": "project_stage",
@@ -340,37 +334,11 @@
           "primaryKey": false,
           "notNull": true
         },
-        "project_non_profit_status": {
-          "name": "project_non_profit_status",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": false,
-          "default": false
-        },
-        "project_start_date": {
-          "name": "project_start_date",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "project_description": {
-          "name": "project_description",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
         "project_industries": {
           "name": "project_industries",
           "type": "text[]",
           "primaryKey": false,
           "notNull": true
-        },
-        "project_location": {
-          "name": "project_location",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "'RV University, Bangalore, India'"
         },
         "created_at": {
           "name": "created_at",
@@ -385,6 +353,38 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "project_tagline": {
+          "name": "project_tagline",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "project_non_profit_status": {
+          "name": "project_non_profit_status",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "project_location": {
+          "name": "project_location",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'RV University, Bangalore, India'"
+        },
+        "project_start_date": {
+          "name": "project_start_date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "project_description": {
+          "name": "project_description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},

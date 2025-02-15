@@ -19,7 +19,7 @@ export const Users = pgTable("users", {
 
 export const eventsTable = pgTable("events", {
   id: uuid("event_id")
-    .default(sql`uuid_generate_v4()`)
+    .defaultRandom()
     .primaryKey(),
   name: text("event_name").notNull(),
   description: text("event_description").notNull(),
@@ -47,7 +47,7 @@ export const eventAttendeesTable = pgTable(
   "event_attendees",
   {
     attendeeeID: uuid("attendee_id")
-      .default(sql`uuid_generate_v4()`)
+      .defaultRandom()
       .primaryKey(),
     eventID: uuid("event_id")
       .notNull()
@@ -65,7 +65,7 @@ export const eventAttendeesTable = pgTable(
 );
 
 export const projectsTable = pgTable("projects", {
-  id: uuid("project_id").default(sql`uuid_generate_v4()`).primaryKey(),
+  id: uuid("project_id").defaultRandom().primaryKey(),
   name: text("project_name").notNull(),
   stage: text("project_stage").notNull(),
   size: text("project_size").notNull(),

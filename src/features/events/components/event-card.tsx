@@ -28,7 +28,7 @@ export function EventCard ( { event }: { event: BasicEventType; } ) {
                 <div className="mb-2 text-sm">
                     <span className="font-semibold">Organizer:</span> {event.organizer}
                 </div>
-                {event.eventTags.length > 0 && (
+                {event.eventTags?.length > 0 && (
                     <div className="flex flex-wrap gap-1 mb-2">
                         {event.eventTags.map( ( tag ) => (
                             <Badge key={tag} variant="secondary">

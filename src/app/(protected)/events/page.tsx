@@ -1,6 +1,6 @@
 import { EventList } from '@/features/events/components/event-grid';
 import { getEvents } from '@/features/events/db/getEvents';
-
+export const dynamic = 'force-dynamic';
 export default async function EventsPage() {
     const events = await getEvents();
     return (
