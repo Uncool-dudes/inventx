@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "migrate:run": "tsx scripts/migrate.ts",
+    "migrate:sql": "tsx scripts/run-migration.ts",
+    "db:create": "tsx scripts/execute-sql.ts",
+    "db:test": "tsx scripts/test-db.ts",
+    "db:interactions": "tsx scripts/test-interactions.ts",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
@@ -15,7 +20,7 @@
     "check": "tsc --noEmit"
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.11.0",
+    "@clerk/nextjs": "^6.12.0",
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-avatar": "^1.1.3",
     "@radix-ui/react-collapsible": "^1.1.3",
@@ -31,6 +36,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.0.4",
+    "date-fns": "^4.1.0",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.39.1",
     "es-toolkit": "^1.32.0",

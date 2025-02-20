@@ -4,7 +4,7 @@ import * as React from "react";
 import {
     BookOpen,
     Bot, Calendar,
-    Settings2
+    Settings2, MessageSquare
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
@@ -20,6 +20,21 @@ import {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 const data = {
   navMain: [
+    {
+      title: "Feed",
+      url: "/feed",
+      icon: MessageSquare,
+      items: [
+        {
+          title: "All Posts",
+          url: "/feed",
+        },
+        {
+          title: "Your Posts",
+          url: "/feed/your-posts",
+        },
+      ],
+    },
     {
       title: "Events",
       url: "#",

@@ -5,7 +5,8 @@ import {
     boolean, uuid,
     timestamp,
     uniqueIndex,
-    primaryKey
+    primaryKey,
+    integer
 } from "drizzle-orm/pg-core";
 
 export const Users = pgTable("users", {
@@ -61,6 +62,32 @@ export const eventAttendeesTable = pgTable(
       table.eventID,
       table.userID
     ),
+  })
+);
+
+export const tweetsTable = pgTable("tweets", {
+  id: uuid("tweet_id").defaultRandom().primaryKey(),
+  userId: text("user_id").notNull().references(() => Users.id, { onDelete: "cascade" }),
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const tweetInteractionsTable = pgTable(
+  "tweet_interactions",
+  {
+    id: uuid("interaction_id").defaultRandom().primaryKey(),
+    tweetId: uuid("tweet_id").notNull().references(() => tweetsTable.id, { onDelete: "cascade" }),
+    userId: text("user_id").notNull().references(() => Users.id, { onDelete: "cascade" }),
+    type: text("type").notNull(), // 'like' or 'comment'
+    comment: text("comment"), // null for likes, contains comment text for comments
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (table) => ({
+    uniqueUserTweetLike: uniqueIndex("unique_user_tweet_like_idx").on(
+      table.userId,
+      table.tweetId
+    ).where(sql`type = 'like'`),
   })
 );
 

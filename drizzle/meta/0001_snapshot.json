@@ -1,0 +1,142 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "id": "62db9ee8-16e2-4542-ac9f-e5e367acb7fa",
+  "prevId": "0dcbd479-7bca-4bf0-82e0-9990785f7e5d",
+  "tables": {
+    "tweets": {
+      "name": "tweets",
+      "schema": "",
+      "columns": {
+        "tweet_id": {
+          "name": "tweet_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "content": {
+          "name": "content",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "tweets_user_id_users_user_id_fk": {
+          "name": "tweets_user_id_users_user_id_fk",
+          "tableFrom": "tweets",
+          "tableTo": "users",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["user_id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "tweet_interactions": {
+      "name": "tweet_interactions",
+      "schema": "",
+      "columns": {
+        "interaction_id": {
+          "name": "interaction_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "tweet_id": {
+          "name": "tweet_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "comment": {
+          "name": "comment",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "unique_user_tweet_like_idx": {
+          "name": "unique_user_tweet_like_idx",
+          "columns": ["user_id", "tweet_id"],
+          "isUnique": true,
+          "predicate": "type = 'like'"
+        }
+      },
+      "foreignKeys": {
+        "tweet_interactions_tweet_id_tweets_tweet_id_fk": {
+          "name": "tweet_interactions_tweet_id_tweets_tweet_id_fk",
+          "tableFrom": "tweet_interactions",
+          "tableTo": "tweets",
+          "columnsFrom": ["tweet_id"],
+          "columnsTo": ["tweet_id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "tweet_interactions_user_id_users_user_id_fk": {
+          "name": "tweet_interactions_user_id_users_user_id_fk",
+          "tableFrom": "tweet_interactions",
+          "tableTo": "users",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["user_id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  }
+}
