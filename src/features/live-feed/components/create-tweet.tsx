@@ -1,5 +1,4 @@
 "use client";
-"use client";
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -29,7 +28,7 @@ export function CreateTweet({ onSubmit }: CreateTweetProps) {
   return (
     <Card className="p-4 mb-6">
       <Textarea
-        placeholder="What's on your mind?"
+        placeholder="What&apos;s on your mind?"
         value={content}
         onChange={(e) => setContent(e.target.value)}
         className="mb-4"

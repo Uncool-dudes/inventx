@@ -5,8 +5,7 @@ import {
     boolean, uuid,
     timestamp,
     uniqueIndex,
-    primaryKey,
-    integer
+    primaryKey
 } from "drizzle-orm/pg-core";
 
 export const Users = pgTable("users", {

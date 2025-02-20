@@ -32,7 +32,7 @@ export default async function YourPostsPage() {
         })}
         {tweets.length === 0 && (
           <p className="text-gray-500 text-center py-8">
-            You haven't posted anything yet.
+            You haven&apos;t posted anything yet.
           </p>
         )}
       </div>
